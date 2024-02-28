@@ -7,4 +7,11 @@ template engine: None
 Package manager: npm
 
 # Instalação do Prisma
-npm install prisma --save-dev
+npm install prisma --save-dev 
+g
+# Inicilialização do Prisma
+npx prisma init --datasource-provider postgresql
+
+# Execeutar uma migration
+npx prisma migrate dev --name create-cars
+
