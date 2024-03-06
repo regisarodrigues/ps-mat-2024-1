@@ -14,13 +14,35 @@ datasource db {
 }
 
 model Car {
-  id                Int           @id @default(autoincrement())
-  brand             String        // Marca do carro
-  model             String        // modelo do carro
-  color             String        // modelo do carro
-  year_manufacture  Int           // Ano de fabricação
-  imported          Boolean       @default(false)  // importado?
-  plates            String        // Placas
-  selling_date      DateTime?     // Data de venda
-  selling_price     Decimal?      // Preço de venda
+  id                Int         @id @default(autoincrement())
+  brand             String      // Marca do carro
+  model             String      // Modelo do carro
+  color             String      // Modelo do carro
+  year_manufacture  Int         // Ano de fabricação
+  imported          Boolean     @default(false)  // Importado?
+  plates            String      // Placas
+  selling_date      DateTime?   // Data de venda
+  selling_price     Decimal?    // Preço de venda
+}
+
+model User {
+  id                Int         @id @default(autoincrement())
+  fullname          String      // Nome completo
+  email             String
+  password          String
+  is_admin          Boolean     @default(false)
+}
+
+model customer {
+  id                Int         @id @default(autoincrement())
+  name              String      
+  ident_document    String
+  birth_date        DateTime?
+  street_name       String
+  house_number      String
+  complements       String?
+  municipality      String
+  state             String
+  phone             String
+  email             String
 }
