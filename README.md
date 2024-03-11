@@ -13,3 +13,7 @@ yarn add prisma -D
 # Inicialização do prisma
 
 npx prisma init --datasource-provider postgresql
+
+# Prisma ORM
+
+npx prisma migrate dev --name
