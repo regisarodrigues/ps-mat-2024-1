@@ -89,7 +89,7 @@ controller.deleteCustomer = async function (req, res) {
     });
 
     // Encontrou e excluiu
-    if (result) {
+    if (customer) {
       await prisma.customer.delete({
         where: { id: Number(req.params.id) },
       });
