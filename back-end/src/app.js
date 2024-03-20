@@ -3,10 +3,11 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 
 import dotenv from 'dotenv'
-// Carrega as variáveis de ambiente do arquivo.env
+// Carrega as variáveis de ambiente do arquivo .env
 dotenv.config()
 
 import indexRouter from "./routes/index.js";
+//import usersRouter from "./routes/users.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/", indexRouter);
+//app.use("/users", usersRouter);
 
 /************************************************
  * ROTAS DA API

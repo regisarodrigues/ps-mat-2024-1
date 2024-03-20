@@ -123,47 +123,48 @@ controller.delete = async function (req, res) {
   }
 }
 
-controller.login = async function (req, res ) {
+controller.login = async function (req, res) {
   try {
-    // Busca o usuario pelo e-mail passsado
+
+    // Busca o usuário pelo e-mail passado
     const user = await prisma.user.findUnique({
       where: { email: req.body?.email }
     })
 
-    //SE o usuario não for encontrado, retorna
-    //HTTP 401: Unauthorized
-    if (! user) res.send(401).end()
+    // Se o usuário não for encontrado, retorna
+    // HTTP 401: Unauthorized
+    if(! user) return res.send(401).end()
 
-    // Usuario encontrado, conferimos a senha
+    // Usuário encontrado, conferimos a senha
     const passwordOk = await bcrypt.compare(req.body.password, user.password)
+
     // Senha errada, retorna
     // HTTP 401: Unauthorized
-    if (! passwordOk) return res.send(401).end()
+    if(! passwordOk) return res.send(401).end()
 
-      // Usuario e senha OK, passamos ao procedimento de gerar o token
+    // Usuário e senha OK, passamos ao procedimento de gerar o token
 
-      // Excluios o campo "password" do úsuario, para que ele não 
-      // Seja incluido no token
+    // Excluímos o campo "password" do usuário, para que ele não
+    // seja incluído no token
+    if(user.password) delete user.password
 
-      if(user.password) delete user.password
+    // Geração do token
+    const token = jwt.sign(
+      user,                       // Dados do usuário
+      process.env.TOKEN_SECRET,   // Senha para criptografar o token
+      { expiresIn: '24h' }        // Prazo de validade do token
+    )
 
-      // Geração do Token
-      const token = jwt.sign(
-        user,                             // Dados do usúarioNPM
-        process.env.TOKEN_SECRET,         // Senha para criptografar o token
-        { expiresIn: '24h'}               // Prazo de validade do token
-      )
+    // Retorna HTTP 200: OK com o token
+    res.send({token})
 
-      // Retorna HTTP 200: Ok com o Token
-      res.send(token)
-
-    }
-    
+  }
   catch(error) {
     console.log(error)
 
-    //HTTP 500: Internal Sever error
+    // HTTP 500: Internal Server Error
     res.status(500).end()
   }
 }
+
 export default controller

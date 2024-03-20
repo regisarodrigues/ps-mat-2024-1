@@ -1,3 +1,4 @@
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -25,17 +26,9 @@ model Car {
   selling_price     Decimal?    // Preço de venda
 }
 
-model User {
+model Customer {
   id                Int         @id @default(autoincrement())
-  fullname          String      // Nome completo
-  email             String      @unique
-  password          String
-  is_admin          Boolean     @default(false)
-}
-
-model customer {
-  id                Int         @id @default(autoincrement())
-  name              String      
+  name              String
   ident_document    String
   birth_date        DateTime?
   street_name       String
@@ -45,4 +38,12 @@ model customer {
   state             String
   phone             String
   email             String
+}
+
+model User {
+  id                Int         @id @default(autoincrement())
+  fullname          String      // Nome completo
+  email             String      @unique
+  password          String
+  is_admin          Boolean     @default(false)
 }
