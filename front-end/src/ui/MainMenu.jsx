@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -39,14 +40,13 @@ export default function MainMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose} component ={Link} to ="/"> 
-          Pagina inicial
+        <MenuItem onClick={handleClose} component={Link} to="/">
+          Página inicial
         </MenuItem>
 
-        <MenuItem onClick={handleClose} component={Link} to="/login"> 
+        <MenuItem onClick={handleClose} component={Link} to="/login">
           Entrar
         </MenuItem>
-
       </Menu>
     </div>
   );
