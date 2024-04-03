@@ -7,20 +7,34 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import IconButton from '@mui/material/IconButton'
 import Button from '@mui/material/Button'
+import myfetch from '../lib/myfetch'
+import Notification from '../ui/Notification'
+import { useNavigate } from 'react-router-dom'
+import Waiting from '../ui/Waiting'
 
 export default function LoginPage() {
 
   const [state, setState] = React.useState({
     showPassword: false,
     email: '',
-    password: ''
+    password: '',
+    showWaiting: false,
+    notif: {
+      show: false,
+      message: '',
+      severity: 'success',
+      timeout: 1500
+    }
   })
   const {
     showPassword,
     email,
-    password
+    password,
+    showWaiting,
+    notif
   } = state
 
+  const navigate = useNavigate()
 
   const handleClickShowPassword = () => setState({...state, showPassword: !showPassword})
 
@@ -32,8 +46,74 @@ export default function LoginPage() {
     setState({...state, [event.target.name]: event.target.value})
   }
 
+  async function handleSubmit(event) {
+    event.preventDefault()    // Evita que a página seja recarregada
+
+    try {
+
+      // Exibe o backdrop de espera
+      setState({...state, showWaiting: true})
+
+      const response = await myfetch.post('/users/login', {email, password})
+      //console.log(response)
+
+      // Armazena o token no localStorage (INSEGURO!! ISSO É PROVISÓRIO!!)
+      window.localStorage.setItem(import.meta.env.VITE_AUTH_TOKEN_NAME, response.token)
+
+      // Mostra notificação de sucesso
+      setState({...state,
+        showWaiting: false,
+        notif: {
+          show: true,
+          message: 'Autenticação efetuada com sucesso.',
+          severity: 'success',
+          timeout: 1500
+      }})
+      
+    }
+    catch(error) {
+      console.error(error)
+
+      // Mostra notificação de erro
+      setState({...state,
+        showWaiting: false,
+        notif: {
+          show: true,
+          message: error.message,
+          severity: 'error',
+          timeout: 4000
+      }})
+    }
+  }
+
+  function handleNotificationClose() {
+    const status = notif.severity
+
+    // Fecha a barra de notificação
+    setState({...state, notif: {
+      show: false,
+      severity: status,
+      message: '',
+      timeout: 1500
+    }})
+
+    // Vai para a página inicial, caso o login tenha sido feito com sucesso
+    if(status === 'success') navigate('/')
+  }
+
   return (
     <>
+      
+      <Waiting show={showWaiting} />
+
+      <Notification
+        show={notif.show}
+        severity={notif.severity}
+        message={notif.message}
+        timeout={notif.timeout}
+        onClose={handleNotificationClose}
+      />
+
       <Typography variant="h1" sx={{ textAlign: 'center' }} gutterBottom>
         Autentique-se
       </Typography>
@@ -46,7 +126,7 @@ export default function LoginPage() {
           margin: 'auto'
         }}
       >
-        <form>
+        <form onSubmit={handleSubmit}>
           <TextField
             name="email"
             value={email}
@@ -90,7 +170,7 @@ export default function LoginPage() {
             Enviar
           </Button>
         </form>
-        <p>{JSON.stringify(state)}</p>
+        
       </Paper>
     </>
   )
