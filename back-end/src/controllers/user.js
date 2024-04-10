@@ -1,3 +1,4 @@
+
 // Importando o Prisma Client
 import prisma from '../database/client.js'
 import bcrypt from 'bcrypt'
@@ -155,8 +156,8 @@ controller.login = async function (req, res) {
       { expiresIn: '24h' }        // Prazo de validade do token
     )
 
-    // Retorna HTTP 200: OK com o token
-    res.send({token})
+    // Retorna HTTP 200: OK com o token e o usuário autenticado
+    res.send({token, user})
 
   }
   catch(error) {
@@ -168,10 +169,11 @@ controller.login = async function (req, res) {
 }
 
 controller.me = function(req, res) {
-  // Retorna as informações do usúario logado que foram
-  // armazenadas em req.authUser em src/middleware/auth.js
-
-  // HTTP: OK ( implicito )
+  // Retorna as informações do usuário logado que foram
+  // armazendas em req.authUser em src/middleware/auth.js
+  
+  // HTTP: OK (implícito)
   res.send(req.authUser)
 }
+
 export default controller

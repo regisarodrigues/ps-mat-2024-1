@@ -30,7 +30,7 @@ function App() {
           <CssBaseline />
           <AuthUserContext.Provider value={{authUser, setAuthUser}}>
             <TopBar />
-            <Box sx={{ margin: '24px 24px 72px 24px'}}>
+            <Box sx={{ margin: '24px 24px 72px 24px' }}>
               <AppRoutes />
             </Box>
             <FooterBar />

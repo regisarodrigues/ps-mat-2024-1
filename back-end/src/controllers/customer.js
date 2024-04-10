@@ -1,9 +1,10 @@
+
 // Importando o Prisma Client
 import prisma from '../database/client.js'
 
 const controller = {}   // Objeto vazio
 
-// Criando um novo carro
+// Criando um novo cliente
 controller.create = async function (req, res) {
   try {
     await prisma.customer.create({ data: req.body })

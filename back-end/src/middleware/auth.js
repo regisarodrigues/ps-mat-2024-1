@@ -26,8 +26,8 @@ export default function(req, res, next) {
 
   /* PROCESSO DE VERIFICAÇÃO DO TOKEN DE AUTORIZAÇÃO */
 
-  // O token é enviado por meio do cabeçalho 'authorization'
-  const authHeader = req.headers['authorization']
+  // O token é enviado por meio do cabeçalho 'authentication'
+  const authHeader = req.headers['authentication']
 
   // O token não foi passado ~> HTTP 403: Forbidden
   if(! authHeader) return res.status(403).end()
