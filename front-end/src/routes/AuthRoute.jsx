@@ -1,21 +1,27 @@
 import React from 'react'
-import { Route, useNavigate} from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import myfetch from '../lib/myfetch'
-
-export default async function AuthRoute({...props}) {
-    const navigate = useNavigate ()
+import AuthUserContext from '../contexts/AuthUserContext'
+ 
+export default function AuthRoute({ children }) {
+ 
+  async function checkAuthUser() {
     try {
-        // Verifica se o usuario ainda está autenticado
-        await myfetch.get('/users/me')
-        // Usuario ainda está autenticado, segue a vida,
-        // Retorna a rota normal
-        return < Route {...props} />
+      await myfetch.get('/users/me')
+      return true
     }
     catch(error) {
-        // Deu erro: o usúario não está mais logado
-        // Redirecionamoss para a pagina de login
-        console.error(error)
-        navigate('/login')
-
+      console.log(error)
+ 
+      const { setAuthuser } = React.useContext(AuthUserContext)
+ 
+      // Apaga as informações do usuário logado no contexto
+      setAuthuser(null)
+ 
+      return false
     }
-} 
+  }
+ 
+  if(checkAuthUser()) return children
+  else return <Navigate to="/login" />  
+}

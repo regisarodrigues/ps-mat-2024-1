@@ -24,15 +24,20 @@ export default function(req, res, next) {
     }
   }
 
-  /* PROCESSO DE VERIFICAÇÃO DO TOKEN DE AUTORIZAÇÃO */
+  /* PROCESSO DE VERIFICAÇÃO DO TOKEN DE AUTENTICAÇÃO */
 
-  // O token é enviado por meio do cabeçalho 'authentication'
-  const authHeader = req.headers['authentication']
+  // O token é enviado por meio do cabeçalho 'authorization'
+  const authHeader = req.headers['authorization']
+
+  //console.log({HEADERS: req.headers})
 
   // O token não foi passado ~> HTTP 403: Forbidden
-  if(! authHeader) return res.status(403).end()
+  if(! authHeader) {
+    console.error('ERRO: Acesso negado por falta de token')
+    return res.status(403).end()
+  }
 
-  // Extrai o token de dentro do cabeçalho 'authorization'
+  // Extrai o token de dentro do cabeçalho 'authentication'
   const authHeaderParts = authHeader.split(' ')
   // O token corresponde à segunda parte do cabeçalho
   const token = authHeaderParts[1]
@@ -41,7 +46,10 @@ export default function(req, res, next) {
   jwt.verify(token, process.env.TOKEN_SECRET, (error, user) => {
 
     // Token inválido ou expirado ~> HTTP 403: Forbidden
-    if(error) return res.status(403).end()
+    if(error) {
+      console.error('ERRO: Token inválido ou expirado')
+      return res.status(403).end()
+    }
 
     /*
       Se chegamos até aqui, o token está OK e temos as informações

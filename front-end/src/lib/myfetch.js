@@ -33,7 +33,7 @@ class HttpError extends Error {
     // nos headers, nesse caso
     const token = window.localStorage.getItem(import.meta.env.VITE_AUTH_TOKEN_NAME)
   
-    if(token) options.headers.Authentication = `Bearer ${token}`
+    if(token) options.headers.authorization = `Bearer ${token}`
   
     return options
   }
