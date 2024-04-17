@@ -42,8 +42,6 @@ function App() {
     fetchAuthUser()
   }, [])
 
-  
-
   return (
     <>
       <ThemeProvider theme={theme}>
