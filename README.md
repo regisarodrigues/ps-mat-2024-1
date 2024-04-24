@@ -30,5 +30,8 @@ npm install
 npm run dev
 
 # Instalação  do projeto front end
-Npm install react-router-dom
+npm install react-router-dom
+npm install react-input-mask
+npm install @mui/x-date-pickers
+npm install date-fns
 

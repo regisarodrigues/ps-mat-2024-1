@@ -58,6 +58,8 @@ export default function(req, res, next) {
     */
     req.authUser = user
 
+    console.log({user})
+
     // Continua para a rota normal
     next()
 

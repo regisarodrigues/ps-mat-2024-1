@@ -173,6 +173,7 @@ controller.me = function(req, res) {
   // armazendas em req.authUser em src/middleware/auth.js
   
   // HTTP: OK (implícito)
+  console.log({AUTHUSER: req.authUser})
   res.send(req.authUser)
 }
 

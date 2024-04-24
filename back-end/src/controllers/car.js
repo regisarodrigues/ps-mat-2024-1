@@ -1,3 +1,4 @@
+
 // Importando o Prisma Client
 import prisma from '../database/client.js'
 
