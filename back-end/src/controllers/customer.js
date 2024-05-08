@@ -9,7 +9,7 @@ controller.create = async function (req, res) {
     await prisma.customer.create({ data: req.body })
 
     // HTTP 201: Created
-    res.status(201).end()
+    res.status(201).send({ message: 'Created' }).end()
   }
   catch(error) {
     console.log(error)
