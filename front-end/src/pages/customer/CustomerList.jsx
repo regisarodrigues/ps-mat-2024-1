@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import myfetch from '../../lib/myfetch'
-import Waiting from '../../ui/Waiting'
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
@@ -11,6 +10,9 @@ import { Link } from 'react-router-dom'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import useConfirmDialog from '../../ui/useConfirmDialog'
+import useNotification from '../../ui/useNotification'
+import useWaiting from '../../ui/useWaiting'
 
 export default function CustomerList() {
 
@@ -79,13 +81,15 @@ export default function CustomerList() {
   ]
 
   const [state, setState] = React.useState({
-    customers: [],
-    showWaiting: false
+    customers: []
   })
   const {
-    customers,
-    showWaiting
+    customers
   } = state
+
+  const { askForConfirmation, ConfirmDialog } = useConfirmDialog()
+  const { notify, Notification } = useNotification()
+  const { showWaiting, Waiting } = useWaiting()
 
   /*
     useEffect() com vetor de dependências vazio irá ser executado
@@ -96,52 +100,50 @@ export default function CustomerList() {
   }, [])
 
   async function fetchData() {
-    setState({ ...state, showWaiting: true })
+    showWaiting(true)
     try {
       const result = await myfetch.get('/customers')
-      console.log(result)
       setState({
         ...state,
-        customers: result,
-        showWaiting: false
+        customers: result
       })
     }
     catch(error) {
       console.error(error)
-      setState({
-        ...state,
-        showWaiting: false
-      })
+      notify(error.message, 'error')
+    }
+    finally {
+      showWaiting(false)
     }
   }
 
   async function handleDeleteButtonClick(deleteId) {
-    if(confirm('Deseja realmente excluir este item?')) {
+    if(await askForConfirmation('Deseja realmente excluir este item?')) {
       // Exibe a tela de espera
-      setState({ ...state, showWaiting: true })
+      showWaiting(true)
       try {
         await myfetch.delete(`/customers/${deleteId}`)
 
         // Recarrega os dados da grid
         fetchData()
 
-        alert('Item excluído com sucesso.')
-
-        // Esconde a tela de espera
-        setState({ ...state, showWaiting: false })
+        notify('Item excluído com sucesso.')
       }
       catch(error) {
-        alert(error.message)
-
-        // Esconde a tela de espera
-        setState({ ...state, showWaiting: false })
+        console.log(error)
+        notify(error.message, 'error')
+      }
+      finally {
+        showWaiting(false)
       }
     }
   }
 
   return(
     <>
-      <Waiting show={showWaiting} />
+      <Waiting />
+      <Notification />
+      <ConfirmDialog />
 
       <Typography variant="h1" gutterBottom>
         Listagem de clientes
