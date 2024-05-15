@@ -14,8 +14,8 @@ const app = express();
 import cors from 'cors'
 
 app.use(cors({
-    origin: process.env.FRONT_END_URL.split(','),
-    credentials: true
+  origin: process.env.FRONT_END_URL.split(','),
+  credentials: true
 }))
 
 app.use(logger("dev"));
@@ -42,8 +42,5 @@ app.use('/users', userRoute)
 
 import customerRoute from './routes/customer.js'
 app.use('/customers', customerRoute)
-
-import sellerRoute from './routes/seller.js'
-app.use('/sellers', sellerRoute)
 
 export default app;

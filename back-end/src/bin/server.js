@@ -1,3 +1,9 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
 import app from "../app.js";
 import chalk from "chalk";
 import { createServer } from "http";

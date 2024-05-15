@@ -7,6 +7,11 @@ export default function(req, res, next) {
     acessadas sem necessidade de verificação do
     token
   */
+ 
+  /*const bypassRoutes = [
+    { url: '/users', method: 'POST' }
+  ]*/
+
   const bypassRoutes = [
     { url: '/users/login', method: 'POST' }
   ]
@@ -25,22 +30,32 @@ export default function(req, res, next) {
   }
 
   /* PROCESSO DE VERIFICAÇÃO DO TOKEN DE AUTENTICAÇÃO */
+  let token = null
+  
+  //1. Procura o token em um cookie
+  token = req.cookies[process.env.AUTH_COOKIE_NAME]
 
-  // O token é enviado por meio do cabeçalho 'authorization'
-  const authHeader = req.headers['authorization']
+  // Se o token não for encontrado no cookie, procura no 
+  // header de autorização
+  if(! token ) {
 
-  //console.log({HEADERS: req.headers})
+    // O token é enviado por meio do cabeçalho 'authorization'
+    const authHeader = req.headers['authorization']
 
-  // O token não foi passado ~> HTTP 403: Forbidden
-  if(! authHeader) {
-    console.error('ERRO: Acesso negado por falta de token')
-    return res.status(403).end()
+    //console.log({HEADERS: req.headers})
+
+    // O token não foi passado ~> HTTP 403: Forbidden
+    if(! authHeader) {
+      console.error('ERRO: Acesso negado por falta de token')
+      return res.status(403).end()
+    }
+
+    // Extrai o token de dentro do cabeçalho 'authentication'
+    const authHeaderParts = authHeader.split(' ')
+    
+    // O token corresponde à segunda parte do cabeçalho
+    const token = authHeaderParts[1]
   }
-
-  // Extrai o token de dentro do cabeçalho 'authentication'
-  const authHeaderParts = authHeader.split(' ')
-  // O token corresponde à segunda parte do cabeçalho
-  const token = authHeaderParts[1]
 
   // Validando o token
   jwt.verify(token, process.env.TOKEN_SECRET, (error, user) => {
@@ -57,8 +72,6 @@ export default function(req, res, next) {
       'req' para usar depois
     */
     req.authUser = user
-
-    console.log({user})
 
     // Continua para a rota normal
     next()

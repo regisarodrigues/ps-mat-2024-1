@@ -1,10 +1,9 @@
-
 /**
  * Biblioteca 'myfetch'
  * 
  * Facilita o uso da API nativa fetch() do JavaScript
  * 
- * @author Liniker Elias <liniker.silva03@gmail.com>
+ * @author Prof. Fausto G. Cintra <professor@faustocintra.com.br>
  * @license GL2PS
  */
 
@@ -56,28 +55,32 @@ function getErrorDescription(response) {
   }
 }
 
+function processResponse(response) {
+  if(response.ok) {
+    const isJson = response.headers.get('content-type')?.includes('application/json')
+    if(isJson) return response.json()
+    else return true
+  } else throw new HttpError(response.status, getErrorDescription(response))
+}
+
 myfetch.post = async function(path, body) {
-  const response = await fetch(baseUrl + path, getOptions(body, 'POST'))  
-  if(response.ok) return response.json()
-  else throw new HttpError(response.status, getErrorDescription(response))
+  const response = await fetch(baseUrl + path, getOptions(body, 'POST'))
+  return processResponse(response)
 }
 
 myfetch.put = async function(path, body) {
   const response = await fetch(baseUrl + path, getOptions(body, 'PUT'))
-  if(response.ok) return true
-  else throw new HttpError(response.status, getErrorDescription(response))
+  return processResponse(response)
 }
 
 myfetch.get = async function(path) {
   const response = await fetch(baseUrl + path, getOptions())
-  if(response.ok) return response.json()
-  else throw new HttpError(response.status, getErrorDescription(response))
+  return processResponse(response)
 }
 
 myfetch.delete = async function(path) {
   const response = await fetch(baseUrl + path, getOptions(null, 'DELETE'))
-  if(response.ok) return true   // Não retorna json()
-  else throw new HttpError(response.status, getErrorDescription(response))
+  return processResponse(response)
 }
 
 export default myfetch
