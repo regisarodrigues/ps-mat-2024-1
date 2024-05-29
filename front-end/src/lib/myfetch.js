@@ -3,7 +3,7 @@
  * 
  * Facilita o uso da API nativa fetch() do JavaScript
  * 
- * @author Prof. Fausto G. Cintra <professor@faustocintra.com.br>
+ * @author Liniker Elias <liniker.silva03@gmail.com>
  * @license GL2PS
  */
 
