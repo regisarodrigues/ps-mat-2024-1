@@ -1,107 +1,96 @@
-// importa o Prisma Client
-import prisma from './../database/client.js';
+// Importando o Prisma Client
+import prisma from '../database/client.js'
 
-// controller
-const controller = {}; // objeto vazio
+const controller = {}   // Objeto vazio
 
-// Cria um novo carro
-controller.createNewCar = async function (req, res) {
+// Criando um novo carro
+controller.create = async function (req, res) {
   try {
-    await prisma.car.create({ data: req.body });
+    await prisma.car.create({ data: req.body })
 
     // HTTP 201: Created
-    res.status(201).end();
-  } catch (error) {
-    console.log(error);
+    res.status(201).end()
+  }
+  catch(error) {
+    console.log(error)
 
     // HTTP 500: Internal Server Error
-    res.status(500).end();
+    res.status(500).end()
   }
-};
+}
 
-// Lista todos os carros
-controller.getAllCars = async function (req, res) {
+controller.retrieveAll = async function (req, res) {
   try {
-    const cars = await prisma.car.findMany();
+    const result = await prisma.car.findMany()
 
-    // HTTP 200: OK
-    res.status(200).send(cars);
-  } catch (error) {
-    console.log(error);
+    // HTTP 200: OK (implícito)
+    res.send(result)
+
+  }
+  catch(error) {
+    console.log(error)
 
     // HTTP 500: Internal Server Error
-    res.status(500).end();
+    res.status(500).end()
   }
-};
+}
 
-// Lista um carro
-controller.getCarById = async function (req, res) {
+controller.retrieveOne = async function(req, res) {
   try {
-    const car = await prisma.car.findUnique({
+    const result = await prisma.car.findUnique({
+      where: { id: Number(req.params.id) }
+    })
+
+    // Encontrou: retorna HTTP 200: OK
+    if(result) res.send(result)
+    // Não encontrou: retorna HTTP 404: Not Found
+    else res.status(404).end()
+  }
+  catch(error) {
+    console.log(error)
+
+    // HTTP 500: Internal Server Error
+    res.status(500).end()
+  }
+}
+
+controller.update = async function(req, res) {
+  try {
+    const result = await prisma.car.update({
       where: { id: Number(req.params.id) },
-    });
+      data: req.body
+    })
 
-    // HTTP 200: OK
-    if (car) {
-      res.status(200).send(car);
-    } else {
-      // HTTP 404 Not Found
-      res.status(404).end();
-    }
-  } catch (error) {
-    console.log(error);
+    // Encontrou e atualizou: retorna HTTP 204: No Content
+    if(result) res.status(204).end()
+    // Não encontrou (e não atualizou): retorna HTTP 404: Not Found
+    else res.status(404).end()
+  }
+  catch(error) {
+    console.log(error)
 
     // HTTP 500: Internal Server Error
-    res.status(500).end();
+    res.status(500).end()
   }
-};
+}
 
-// Atualizar um carro
-controller.updateCar = async function (req, res) {
+controller.delete = async function (req, res) {
   try {
-    const car = await prisma.car.update({
-      where: { id: Number(req.params.id) },
-      data: req.body,
-    });
+    const result = await prisma.car.delete({
+      where: { id: Number(req.params.id) }
+    })
 
-    // Encontrou e atualizou HTTP 204 No Content
-    if (car) {
-      res.status(204).end();
-    } else {
-      // HTTP 404 Not Found
-      res.status(404).end();
-    }
-  } catch (error) {
-    console.log(error);
+    // Encontrou e excluiu ~> HTTP 204: No Content
+    if(result) res.status(204).end()
+    // Não encontrou (e não excluiu) ~> HTTP 404: Not Found
+    else res.status(404).end()
+  }
+  catch(error) {
+    console.log(error)
 
     // HTTP 500: Internal Server Error
-    res.status(500).end();
+    res.status(500).end()
   }
-};
+}
 
-// Deleta um carro
-controller.deleteCar = async function (req, res) {
-  try {
-    const car = await prisma.car.findUnique({
-      where: { id: Number(req.params.id) },
-    });
-
-    // Encontrou e excluiu
-    if (result) {
-      await prisma.car.delete({
-        where: { id: Number(req.params.id) },
-      });
-      res.status(204).end();
-    } else {
-      // HTTP 404 Not Found
-      res.status(404).end();
-    }
-  } catch (error) {
-    console.log(error);
-
-    // HTTP 500: Internal Server Error
-    res.status(500).end();
-  }
-};
-
-export default controller;
+export default controller

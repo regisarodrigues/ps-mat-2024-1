@@ -1,32 +1,46 @@
-import cookieParser from 'cookie-parser';
-import express, { json, urlencoded } from 'express';
-import logger from 'morgan';
+import express, { json, urlencoded } from "express";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
 
-import indexRouter from './routes/index.js';
+import dotenv from 'dotenv'
+// Carrega as variáveis de ambiente do arquivo .env
+dotenv.config()
+
+import indexRouter from "./routes/index.js";
+//import usersRouter from "./routes/users.js";
 
 const app = express();
 
-app.use(logger('dev'));
+import cors from 'cors'
+
+app.use(cors({
+  origin: process.env.FRONT_END_URL.split(','),
+  credentials: true
+}))
+
+app.use(logger("dev"));
 app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
+app.use("/", indexRouter);
+//app.use("/users", usersRouter);
 
-/****************************************************
+/************************************************
  * ROTAS DA API
- * **************************************************/
+************************************************/
 
-//cars
-import carRoute from './routes/car.js';
-app.use('/cars', carRoute);
+// Middleware que protege as rotas com autenticação
+import auth from './middleware/auth.js'
+app.use(auth)
 
-//users
-import userRoute from './routes/user.js';
-app.use('/users', userRoute);
+import carRoute from './routes/car.js'
+app.use('/cars', carRoute)
 
-// customers
-import customerRoute from './routes/customer.js';
-app.use('/customers', customerRoute);
+import userRoute from './routes/user.js'
+app.use('/users', userRoute)
+
+import customerRoute from './routes/customer.js'
+app.use('/customers', customerRoute)
 
 export default app;

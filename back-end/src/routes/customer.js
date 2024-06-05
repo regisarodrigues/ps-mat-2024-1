@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import controller from '../controllers/customer.js';
+import { Router } from 'express'
+import controller from '../controllers/customer.js'
 
-const router = Router();
+const router = Router()
 
-router.post('/', controller.createNewCustomer);
-router.get('/', controller.getAllCustomers);
-router.get('/:id', controller.getCustomerById);
-router.put('/:id', controller.updateCustomer);
-router.delete('/:id', controller.deleteCustomer);
+router.post('/', controller.create)
+router.get('/', controller.retrieveAll)
+router.get('/:id', controller.retrieveOne)
+router.put('/:id', controller.update)
+router.delete('/:id', controller.delete)
 
-export default router;
+export default router
