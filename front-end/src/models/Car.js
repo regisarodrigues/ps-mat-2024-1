@@ -43,5 +43,9 @@ export default z.object({
       })
       .nullable(),
 
-  selling_price: z.coerce.number().gte(1000).lte(5000000).nullable(),
+  selling_price: z.coerce
+    .number()
+    .gte(1000, { message: 'O valor deve ser maior que R$ 1.000' })
+    .lte(5000000, { message: 'O valor deve ser menor que R$ 5.000.000' })
+    .nullable(),
 });
