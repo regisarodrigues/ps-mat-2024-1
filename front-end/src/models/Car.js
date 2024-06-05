@@ -31,9 +31,9 @@ export default z.object({
     .max(new Date(), { message: 'A data de venda não pode estar no futuro' })
     .nullable(),  // O campo é opcional
  
-  selling_price:
+    selling_price:
     z.coerce.number()
-    .gte(1000) // alias .min(5)    
-    .lte(5000000) // alias .max(5)
-    .nullable()  
-})
+    .min(1000, { message: 'O preço de venda deve ser maior ou igual a 1.000' })
+    .max(5000000, { message: 'O preço de venda deve ser menor ou igual a 5.000.000' })
+    .nullable(),
+  });
