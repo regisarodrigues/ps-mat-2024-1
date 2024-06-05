@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
 
 export default function (req, res, next) {
-  next();
-  return;
   /*
     Algumas rotas, como /user/login, poderão ser
     acessadas sem necessidade de verificação do
