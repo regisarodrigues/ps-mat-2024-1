@@ -1,7 +1,8 @@
 import express, { json, urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import cors from 'cors';
 
 // Carrega as variáveis de ambiente do arquivo .env
 dotenv.config()
@@ -11,12 +12,11 @@ import indexRouter from "./routes/index.js";
 
 const app = express();
 
-import cors from 'cors'
 
 app.use(cors({
   origin: process.env.FRONT_END_URL.split(','),
   credentials: true
-}))
+}));
 
 app.use(logger("dev"));
 app.use(json());

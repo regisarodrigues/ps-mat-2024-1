@@ -5,10 +5,12 @@ export default function (req, res, next) {
     Algumas rotas, como /user/login, poderão ser
     acessadas sem necessidade de verificação do
     token
-  */
-  const bypassRoutes = [{ url: '/users/login', method: 'POST' }];
-
-  /* 
+    */
+ next();
+ return;
+ const bypassRoutes = [{ url: '/users/login', method: 'POST' }];
+ 
+ /* 
     Verificamos se a rota atual corresponde a
     alguma das exceções cadastradas acima. Sendo
     o caso, permite continuar sem verificar a
