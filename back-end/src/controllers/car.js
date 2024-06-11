@@ -74,6 +74,7 @@ controller.update = async function(req, res) {
   }
 }
 
+<<<<<<< HEAD
 controller.delete = async function (req, res) {
   try {
     const result = await prisma.car.delete({
@@ -93,4 +94,6 @@ controller.delete = async function (req, res) {
   }
 }
 
+=======
+>>>>>>> 2d1edc18bce51b59a278b1657867cf27e0aa237b
 export default controller

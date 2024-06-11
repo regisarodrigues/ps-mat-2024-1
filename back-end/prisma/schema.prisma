@@ -17,7 +17,11 @@ model Car {
   id                Int         @id @default(autoincrement())
   brand             String      // Marca do carro
   model             String      // Modelo do carro
+<<<<<<< HEAD
   color             String      // Cor do carro
+=======
+  color             String      // Modelo do carro
+>>>>>>> 2d1edc18bce51b59a278b1657867cf27e0aa237b
   year_manufacture  Int         // Ano de fabricação
   imported          Boolean     @default(false)  // Importado?
   plates            String      // Placas
@@ -25,6 +29,7 @@ model Car {
   selling_price     Decimal?    // Preço de venda
 }
 
+<<<<<<< HEAD
 model Customer {
   id                Int         @id @default(autoincrement())
   name              String
@@ -56,3 +61,6 @@ model Seller {
   phone               String
   is_manager          Boolean     @default(false)
 }
+=======
+
+>>>>>>> 2d1edc18bce51b59a278b1657867cf27e0aa237b
