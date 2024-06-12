@@ -11,6 +11,7 @@ import CustomerList from '../pages/customer/CustomerList';
   AuthGuard verifica se o usuário ainda está autenticado
   quando há uma mudança de rota no front-end
 */
+import AboutPage from '../pages/AboutPage';
 import CarForm from '../pages/cars/CarForm';
 import CarList from '../pages/cars/CarList';
 import AuthGuard from './AuthGuard';
@@ -79,6 +80,8 @@ export default function AppRoutes() {
           </AuthGuard>
         }
       />
+
+      <Route path='/about' element={<AboutPage />} />
     </Routes>
   );
 }
