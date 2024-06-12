@@ -19,12 +19,6 @@ import useNotification from '../../ui/useNotification';
 import useWaiting from '../../ui/useWaiting';
 
 export default function CarForm() {
-  /*
-    Por padrão, todos os campos do nosso formulário terão como
-    valor inicial uma string vazia. A exceção é o campo birth_date
-    que, devido ao funcionamento do componente DatePicker, deve
-    iniciar valendo null.
-  */
 
   const formDefaults = {
     brand: '',
@@ -61,9 +55,9 @@ export default function CarForm() {
   ];
 
   const plateMaskFormatChars = {
-    9: '[0-9]', // somente dígitos
-    $: '[0-9A-J]', // dígito de 0 a 9 ou uma letra de A a J.
-    A: '[A-Z]', //  letra maiúscula de A a Z.
+    9: '[0-9]', 
+    $: '[0-9A-J]', 
+    A: '[A-Z]', 
   };
 
   const currentYear = new Date().getFullYear();
@@ -114,12 +108,6 @@ export default function CarForm() {
     }
   }
 
-  /*
-    useEffect() que é executado apenas uma vez, no carregamento do componente.
-    Verifica se a rota tem parâmetro. Caso tenha, significa que estamos vindo
-    do componente de listagem por meio do botão de editar, e precisamos chamar
-    a função loadData() para buscar no back-end os dados do cliente a ser editado
-  */
   React.useEffect(() => {
     if (params.id) loadData();
   }, []);
@@ -310,9 +298,6 @@ export default function CarForm() {
             </Button>
           </Box>
 
-          {/* <Box sx={{ fontFamily: 'monospace', display: 'flex', width: '100%' }}>
-            {JSON.stringify(inputErrors)}
-          </Box> */}
         </form>
       </Box>
     </>
