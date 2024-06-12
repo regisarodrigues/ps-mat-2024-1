@@ -7,10 +7,12 @@ import LoginPage from '../pages/LoginPage';
 import CustomerForm from '../pages/customer/CustomerForm';
 import CustomerList from '../pages/customer/CustomerList';
 
+
 /*
-  AuthGuard verifica se o usuário ainda está autenticado
-  quando há uma mudança de rota no front-end
+AuthGuard verifica se o usuário ainda está autenticado
+quando há uma mudança de rota no front-end
 */
+import ProjectInfo from '../pages/ProjectInfo';
 import CarForm from '../pages/cars/CarForm';
 import CarList from '../pages/cars/CarList';
 import AuthGuard from './AuthGuard';
@@ -76,6 +78,16 @@ export default function AppRoutes() {
         element={
           <AuthGuard>
             <CarForm />
+          </AuthGuard>
+        }
+      />
+
+      {/*Rota para o novo componente ProjectInfo*/}
+      <Route
+        path='/project-info'
+        element={
+          <AuthGuard>
+            <ProjectInfo />
           </AuthGuard>
         }
       />
