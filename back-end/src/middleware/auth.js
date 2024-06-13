@@ -6,6 +6,7 @@ export default function (req, res, next) {
     acessadas sem necessidade de verificação do
     token
   */
+
   const bypassRoutes = [{ url: '/users/login', method: 'POST' }];
 
   /* 

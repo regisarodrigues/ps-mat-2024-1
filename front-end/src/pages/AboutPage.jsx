@@ -5,7 +5,7 @@ import useNotification from '../ui/useNotification';
 import useWaiting from '../ui/useWaiting';
 
 export default function AboutPage() {
-  const [about, setAbout] = React.useState();
+  const [about, setAbout] = React.useState('');
 
   const { notify, Notification } = useNotification();
   const { showWaiting, Waiting } = useWaiting();
@@ -21,8 +21,9 @@ export default function AboutPage() {
   async function fetchData() {
     showWaiting(true);
     try {
-      const result = await fetch('https://api.faustocintra.com.br/about/1');
-      about(result.info);
+      const response = await fetch('https://api.faustocintra.com.br/about/1');
+      const result = await response.json();
+      setAbout(result.info);
     } catch (error) {
       console.error(error);
       notify(error.message, 'error');
