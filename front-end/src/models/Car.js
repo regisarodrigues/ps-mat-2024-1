@@ -4,8 +4,7 @@ export default z.object({
  
   brand:
     z.string()
-    .max(25, { message: 'O nome da marca deve ter, no máximo, 25 caracteres' })
-    .includes(' ', { message: 'O nome deve conter um espaço em branco separando nome e sobrenome' }),
+    .max(25, { message: 'O nome da marca deve ter, no máximo, 25 caracteres' }),
  
   model:
     z.string()

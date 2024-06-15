@@ -5,7 +5,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom' 
 
 export default function MainMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -43,6 +43,12 @@ export default function MainMenu() {
       >
         <MenuItem onClick={handleClose} component={Link} to="/">
           Página inicial
+        </MenuItem>
+
+        {/* Foi inserido o Menu "Sobre" na barra ao lado da logo Karangos juntos com os demais, pra ser possivel que 
+        o usuario clique e seja redirecionado com as informações do PROJETO - solicitadas na prova 2 " */}
+      <MenuItem onClick={handleClose} component={Link} to="/about" divider>
+          Sobre  
         </MenuItem>
 
         <MenuItem onClick={handleClose} component={Link} to="/customers">
