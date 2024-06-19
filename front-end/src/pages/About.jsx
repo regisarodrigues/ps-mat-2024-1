@@ -18,11 +18,7 @@ export default function About() {
 
   async function fetchData() {
     try {
-      const response = await myfetch.get('/about/1');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const result = await response.json();
+      const result = await myfetch.get('/about/1');
       setInfo(result.info);
     } catch (error) {
       console.error(error);
@@ -49,7 +45,7 @@ export default function About() {
         <CardMedia
           component="img"
           height="140"
-          image="../assets/minha-foto.jpeg"
+          image="/minha-foto.jpeg"
           alt="Foto do autor"
         />
         <CardContent>

@@ -96,9 +96,7 @@ export default function AppRoutes() {
       <Route
         path='/about'
         element={
-          <AuthGuard>
             <About />
-          </AuthGuard>
         }
       />
 
