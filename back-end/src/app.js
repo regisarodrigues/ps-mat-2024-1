@@ -1,9 +1,10 @@
 import express, { json, urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import cors from 'cors'
+import cors from 'cors';
+import dotenv from 'dotenv';
 
-import dotenv from 'dotenv'
+
 // Carrega as variáveis de ambiente do arquivo .env
 dotenv.config()
 
@@ -41,5 +42,8 @@ app.use('/users', userRoute)
 
 import customerRoute from './routes/customer.js'
 app.use('/customers', customerRoute)
+
+import aboutRoute from './routes/about.js'
+app.use('/about', aboutRoute)
 
 export default app;

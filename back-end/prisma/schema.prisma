@@ -56,3 +56,9 @@ model Seller {
   phone               String
   is_manager          Boolean     @default(false)
 }
+
+model About {
+  id                  Int         @id @default(autoincrement()) // Chave Primária Auto incremental
+  info                String      
+
+}
