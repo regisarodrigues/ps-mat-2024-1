@@ -44,7 +44,11 @@ import customerRoute from './routes/customer.js'
 app.use('/customers', customerRoute)
 
 // Importa e usa o roteador 'sobre'
-import aboutRoute from './routes/sobre.js'
+//import aboutRoute from './routes/sobre.js'
+//app.use('/about', aboutRoute)
+
+// Importa e usa o roteador 'about'
+import aboutRoute from './routes/about.js'
 app.use('/about', aboutRoute)
 
 export default app;

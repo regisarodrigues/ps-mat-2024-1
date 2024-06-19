@@ -15,6 +15,7 @@ quando há uma mudança de rota no front-end
 import ProjectInfo from '../pages/ProjectInfo';
 import CarForm from '../pages/cars/CarForm';
 import CarList from '../pages/cars/CarList';
+import About from '../pages/About'; 
 import AuthGuard from './AuthGuard';
 
 export default function AppRoutes() {
@@ -91,6 +92,16 @@ export default function AppRoutes() {
           </AuthGuard>
         }
       />
+
+      <Route
+        path='/about'
+        element={
+          <AuthGuard>
+            <About />
+          </AuthGuard>
+        }
+      />
+
     </Routes>
   );
 }

@@ -8,7 +8,11 @@ export default function (req, res, next) {
     */
  next();
  return;
- const bypassRoutes = [{ url: '/users/login', method: 'POST' }];
+ const bypassRoutes = [
+    { url: '/users/login', method: 'POST' },
+    { url: '/about', method: 'POST' },
+  ];
+
  
  /* 
     Verificamos se a rota atual corresponde a
